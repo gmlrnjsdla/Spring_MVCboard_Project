@@ -98,5 +98,42 @@ public class BoardDao {
 		return dtos;
 	}
 
+	
+	public void write(String bname,String btitle,String bcontent) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+				
+		try {
+			conn = dataSource.getConnection();
+			String sql = "INSERT INTO mvc_board(bid,bname,btitle,bcontent,bhit,"
+					+ "bgroup,bstep,bindent) "
+					+ "VALUES (mvc_board_seq.nextval,?,?,?,0,mvc_board_seq.currval,0,0)"; 
 
+			pstmt = conn.prepareStatement(sql);//sql문 객체 생성
+			
+			pstmt.setString(1, bname);
+			pstmt.setString(2, btitle);
+			pstmt.setString(3, bcontent);
+			
+			pstmt.executeUpdate();
+					
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }
