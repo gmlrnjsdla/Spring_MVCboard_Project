@@ -11,6 +11,7 @@ import com.heekwoncompany.mvcboard.command.BContentviewCommand;
 import com.heekwoncompany.mvcboard.command.BDeleteCommand;
 import com.heekwoncompany.mvcboard.command.BListCommand;
 import com.heekwoncompany.mvcboard.command.BModifyCommand;
+import com.heekwoncompany.mvcboard.command.BReplyCommand;
 import com.heekwoncompany.mvcboard.command.BWriteCommand;
 
 @Controller
@@ -91,4 +92,27 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
+	
+	@RequestMapping(value="reply_write")
+	public String reply_write(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		command = new BContentviewCommand();
+		command.excute(model);
+		
+		
+		return "reply_write";
+	}
+	
+	@RequestMapping(value="reply")
+	public String reply(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		command = new BReplyCommand();
+		command.excute(model);
+		
+		
+		return "redirect:list";
+	}
+	
 }
