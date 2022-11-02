@@ -23,6 +23,7 @@ public class BContentviewCommand implements BCommand {
 		BoardDao dao = new BoardDao();
 		BoardDto dto = dao.content_view(bid);
 		
+		
 		model.addAttribute("content", dto);
 
 	}

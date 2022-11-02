@@ -46,6 +46,7 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);//sql문 객체 생성
 			rs = pstmt.executeQuery(); //sql을 실행하여 결과값을 반환
 			
+			
 			while(rs.next()) {
 				int bid = rs.getInt("bid");
 				String bname = rs.getString("bname");
@@ -56,6 +57,7 @@ public class BoardDao {
 				int bgroup = rs.getInt("bgroup");
 				int bstep = rs.getInt("bstep");
 				int bindent = rs.getInt("bindent");
+				
 				
 //				BoardDto dto = new BoardDto();
 //				dto.setBid(bid);
@@ -137,6 +139,8 @@ public class BoardDao {
 	}
 	
 	public BoardDto content_view(String cid) {
+		upHit(cid);
+		
 		BoardDto dto = null;
 		
 		Connection conn = null;
@@ -263,4 +267,77 @@ public class BoardDao {
 			}
 		}
 	}
+	
+	public void upHit(String bid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE mvc_board SET bhit=bhit+1 WHERE bid=?";
+			pstmt = conn.prepareStatement(sql); //sql객체 생성
+			pstmt.setString(1, bid);
+			
+			pstmt.executeUpdate(); //sql 실행
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public int board_count() {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+				
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT * FROM mvc_board"; 
+			// 게시글 번호의 내림차순 정렬(최근글이 가장 위에 오도록 함)
+			pstmt = conn.prepareStatement(sql);//sql문 객체 생성
+			rs = pstmt.executeQuery(); //sql을 실행하여 결과값을 반환
+			
+			
+			
+			while(rs.next()) {
+				count++;
+			}
+						
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return count;
+	}
+	
 }

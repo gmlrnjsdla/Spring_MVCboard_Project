@@ -10,15 +10,17 @@
 <body>
 	<h2>자유게시판</h2>
 	<hr>
+	
 	<table border="1" cellspacing="0" cellpadding="0" width="800">
 		<tr bgcolor="pink" height="40">
 			<th>번호</th>
-			<th>글쓴이</th>
+			<th width="100">글쓴이</th>
 			<th width="500">글제목</th>
 			<th>게시일</th>
 			<th>조회수</th>
 		</tr>
 		
+		총 게시글 수 : ${boardCount}개	
 		<c:forEach items="${list}" var = "bdto">
 			<tr height="30" align="center">
 				<td>${bdto.bid}</td>
