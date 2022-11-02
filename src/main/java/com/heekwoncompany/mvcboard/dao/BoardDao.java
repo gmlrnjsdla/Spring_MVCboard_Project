@@ -195,4 +195,72 @@ public class BoardDao {
 		return dto;
 	}
 	
+	public void modify(String bname, String btitle, String bcontent,String bid) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE mvc_board SET bname=?, btitle=?, bcontent=? WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql); //sql객체 생성
+			pstmt.setString(1, bname);
+			pstmt.setString(2, btitle);
+			pstmt.setString(3, bcontent);
+			pstmt.setString(4, bid);
+			
+			pstmt.executeUpdate(); //sql 실행
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+		
+	}
+	
+	public void delete(String bid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "DELETE FROM mvc_board WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql); //sql객체 생성
+			pstmt.setString(1, bid);
+			
+			
+			pstmt.executeUpdate(); //sql 실행
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.heekwoncompany.mvcboard.command.BCommand;
 import com.heekwoncompany.mvcboard.command.BContentviewCommand;
+import com.heekwoncompany.mvcboard.command.BDeleteCommand;
 import com.heekwoncompany.mvcboard.command.BListCommand;
+import com.heekwoncompany.mvcboard.command.BModifyCommand;
 import com.heekwoncompany.mvcboard.command.BWriteCommand;
 
 @Controller
@@ -65,12 +67,30 @@ public class BoardController {
 	public String modify_view(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
-		
 		command = new BContentviewCommand();
 		command.excute(model);
+		
 		
 		return "modify_view";
 	}
 	
+	@RequestMapping(value="modify")
+	public String modify(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		command = new BModifyCommand();
+		command.excute(model);
+		
+		return "redirect:list";
+	}
 	
+	@RequestMapping(value="delete")
+	public String delete(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		command = new BDeleteCommand();
+		command.excute(model);
+		
+		return "redirect:list";
+	}
 }
