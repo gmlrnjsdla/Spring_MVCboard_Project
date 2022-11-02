@@ -13,11 +13,11 @@
 	
 	<table border="1" cellspacing="0" cellpadding="0" width="800">
 		<tr bgcolor="pink" height="40">
-			<th>번호</th>
+			<th width="50">번호</th>
 			<th width="100">글쓴이</th>
 			<th width="500">글제목</th>
-			<th>게시일</th>
-			<th>조회수</th>
+			<th width="200">게시일</th>
+			<th width="70">조회수</th>
 		</tr>
 		
 		총 게시글 수 : ${boardCount}개	
