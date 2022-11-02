@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.heekwoncompany.mvcboard.command.BCommand;
+import com.heekwoncompany.mvcboard.command.BContentviewCommand;
 import com.heekwoncompany.mvcboard.command.BListCommand;
 import com.heekwoncompany.mvcboard.command.BWriteCommand;
 
@@ -47,5 +48,29 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
+	
+	@RequestMapping(value="content_view")
+	public String content_view(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		
+		command = new BContentviewCommand();
+		command.excute(model);
+		
+		return "content_view";
+	}
+	
+	
+	@RequestMapping(value="modify_view")
+	public String modify_view(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		
+		command = new BContentviewCommand();
+		command.excute(model);
+		
+		return "modify_view";
+	}
+	
 	
 }

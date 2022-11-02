@@ -136,4 +136,63 @@ public class BoardDao {
 		}
 	}
 	
+	public BoardDto content_view(String cid) {
+		BoardDto dto = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+				
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT * FROM mvc_board WHERE bid=?"; 
+
+			pstmt = conn.prepareStatement(sql);//sql문 객체 생성
+			pstmt.setString(1, cid);
+			rs = pstmt.executeQuery(); //sql을 실행하여 결과값을 반환
+			
+			if(rs.next()) {
+				int bid = rs.getInt("bid");
+				String bname = rs.getString("bname");
+				String btitle = rs.getString("btitle");
+				String bcontent = rs.getString("bcontent");
+				Timestamp bdate = rs.getTimestamp("bdate");
+				int bhit = rs.getInt("bhit");
+				int bgroup = rs.getInt("bgroup");
+				int bstep = rs.getInt("bstep");
+				int bindent = rs.getInt("bindent");
+				
+
+				
+				dto = new BoardDto(bid,bname,btitle,bcontent,
+						bdate,bhit,bgroup,bstep,bindent);
+				
+			}
+
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return dto;
+	}
+	
 }
