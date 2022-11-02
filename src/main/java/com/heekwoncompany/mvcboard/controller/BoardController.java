@@ -44,7 +44,6 @@ public class BoardController {
 	public String write(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
-		
 		command = new BWriteCommand();
 		command.excute(model);
 		
@@ -55,7 +54,6 @@ public class BoardController {
 	public String content_view(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
-		
 		command = new BContentviewCommand();
 		command.excute(model);
 		
